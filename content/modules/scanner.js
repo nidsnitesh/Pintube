@@ -20,7 +20,39 @@ function debouncedScan() {
   scanTimeout = setTimeout(scanAndInjectButtons, 200);
 }
 
+function hideShortsInGuide() {
+  if (!document.body.classList.contains('pintube-hide-shorts')) return;
+
+  const guideLinks = document.querySelectorAll(
+    '#guide a[href*="shorts"], #mini-guide a[href*="shorts"], ' +
+    'ytd-guide-entry-renderer a[href*="shorts"], ytd-mini-guide-entry-renderer a[href*="shorts"], ' +
+    '#guide [title="Shorts"], #mini-guide [title="Shorts"], ' +
+    'a[href*="/shorts"]'
+  );
+
+  guideLinks.forEach(link => {
+    const container = link.closest(
+      'ytd-guide-entry-renderer, ytd-mini-guide-entry-renderer, ' +
+      'yt-navigation-drawer-entry-view-model, tp-yt-paper-item'
+    ) || link;
+
+    if (container && container.classList) {
+      container.classList.add('pintube-is-shorts-container');
+    }
+
+    if (link.closest('#guide, #mini-guide, ytd-guide-renderer, ytd-mini-guide-renderer, ytd-app')) {
+      link.style.setProperty('display', 'none', 'important');
+      if (container) {
+        container.style.setProperty('display', 'none', 'important');
+        container.style.setProperty('visibility', 'hidden', 'important');
+      }
+    }
+  });
+}
+
 function scanAndInjectButtons() {
+  hideShortsInGuide();
+
   // Mark Shorts cards, shelves, and left drawer navigation entries with pintube-is-shorts-container
   const shortsElements = document.querySelectorAll(
     'ytd-reel-shelf-renderer, yt-reel-shelf-view-model, ytd-reel-item-renderer, ' +

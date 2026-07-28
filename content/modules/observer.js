@@ -55,11 +55,31 @@ function setupNavigationListeners() {
   });
 }
 
+function setupGuideListeners() {
+  // Listen for clicks on hamburger guide menu button to run hideShortsInGuide instantly
+  document.addEventListener('click', (e) => {
+    if (e.target && e.target.closest('#guide-button, #button, ytd-app-header, ytd-masthead')) {
+      setTimeout(() => {
+        if (typeof hideShortsInGuide === 'function') hideShortsInGuide();
+      }, 50);
+    }
+  }, true);
+
+  // Also listen for mouseover on guide drawer
+  const guideElem = document.querySelector('#guide, ytd-guide-renderer');
+  if (guideElem) {
+    guideElem.addEventListener('mouseenter', () => {
+      if (typeof hideShortsInGuide === 'function') hideShortsInGuide();
+    }, { passive: true });
+  }
+}
+
 function init() {
   loadPinsFromStorage();
   setupStorageListener();
   startDOMObserver();
   setupNavigationListeners();
+  setupGuideListeners();
   enableTheaterModeIfNeeded();
 }
 
