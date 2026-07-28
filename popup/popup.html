@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PinTube - YouTube Video Pinner</title>
+  <link rel="stylesheet" href="popup.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Header -->
+    <header class="app-header">
+      <div class="brand">
+        <span class="logo-icon">📌</span>
+        <div class="brand-text">
+          <h1>PinTube</h1>
+          <span class="tagline">YouTube Video Pinner & Focus Suite</span>
+        </div>
+      </div>
+      <div class="header-right">
+        <span class="count-badge" id="pinCount">0 Pins</span>
+      </div>
+    </header>
+
+    <!-- Toolbar & Search -->
+    <div class="toolbar">
+      <div class="search-box">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="searchInput" placeholder="Search pinned videos..." />
+        <button id="clearSearchBtn" class="icon-btn-sm hidden" title="Clear search">✕</button>
+      </div>
+
+      <div class="toggles-row">
+        <!-- Focus Mode Toggle -->
+        <label class="toggle-switch" title="Focus Mode: Only show Pinned Videos on YouTube Homepage">
+          <input type="checkbox" id="focusModeToggle" />
+          <span class="slider"></span>
+          <span class="toggle-label">🎯 Focus Mode</span>
+        </label>
+
+        <!-- Shorts Hide Toggle -->
+        <label class="toggle-switch" title="Hide Shorts sections & reels from YouTube feed">
+          <input type="checkbox" id="hideShortsToggle" />
+          <span class="slider"></span>
+          <span class="toggle-label">🚫 Hide Shorts</span>
+        </label>
+      </div>
+
+      <div class="tool-controls">
+        <select id="sortSelect" class="custom-select">
+          <option value="newest">Sort: Newest First</option>
+          <option value="oldest">Sort: Oldest First</option>
+          <option value="title">Sort: Title (A-Z)</option>
+          <option value="channel">Sort: Channel Name</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Pinned Videos List Container -->
+    <main class="content-area">
+      <div id="pinsContainer" class="pins-grid"></div>
+
+      <!-- Empty State -->
+      <div id="emptyState" class="empty-state hidden">
+        <div class="empty-icon">📌</div>
+        <h3>No Pinned Videos Yet</h3>
+        <p>Hover over any video thumbnail on YouTube and click the pin button to pin it here!</p>
+        <a href="https://www.youtube.com" target="_blank" class="yt-link-btn">Open YouTube</a>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+      <span>Open Source Extension</span>
+      <div class="footer-links">
+        <button id="clearAllBtn" class="danger-text-btn">Clear All</button>
+      </div>
+    </footer>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
