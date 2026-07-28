@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "PinTube - YouTube Video Pinner & Focus Suite",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Pin your favorite YouTube videos to your home feed, use Focus Mode to remove feed distractions, and hide Shorts.",
   "icons": {
     "16": "icons/icon16.png",
