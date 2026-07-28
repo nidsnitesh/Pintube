@@ -17,6 +17,7 @@ function setupStorageListener() {
       pinnedVideos = changes.pintube_pins.newValue || [];
       updatePinnedMap();
       renderHomeShelf(true);
+      if (typeof injectWatchPinButton === 'function') injectWatchPinButton();
     }
     if (changes.pintube_focus_mode !== undefined) {
       applyFocusModeSetting(!!changes.pintube_focus_mode.newValue);
@@ -36,6 +37,7 @@ function togglePinVideo(videoData) {
   pinnedVideos = updatedPins;
   updatePinnedMap();
   renderHomeShelf(true);
+  if (typeof injectWatchPinButton === 'function') injectWatchPinButton();
 
   chrome.storage.sync.set({ pintube_pins: pinnedVideos }, () => {
     if (chrome.runtime.lastError) {

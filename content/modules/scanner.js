@@ -39,5 +39,6 @@ function scanAndInjectButtons() {
   });
 
   document.querySelectorAll(CARD_SELECTORS.join(',')).forEach(card => injectPinButton(card));
+  injectWatchPinButton();
   renderHomeShelf(false);
 }
