@@ -1,0 +1,57 @@
+/* PinTube – Focus Mode & Hide Shorts */
+
+/* Focus Mode: Add extra margin to Pinned Shelf */
+body.pintube-focus-mode #pintube-home-shelf {
+  margin-top: 32px !important;
+}
+
+/* Hide homepage recommendation grid (show only Pinned Shelf) */
+body.pintube-focus-mode ytd-rich-grid-renderer #contents > ytd-rich-item-renderer,
+body.pintube-focus-mode ytd-rich-grid-renderer #contents > ytd-rich-grid-row,
+body.pintube-focus-mode ytd-rich-grid-renderer #contents > ytd-rich-section-renderer,
+body.pintube-focus-mode ytd-rich-grid-renderer #contents > ytd-continuation-item-renderer {
+  display: none !important;
+}
+
+/* Hide topic filter chips bar */
+body.pintube-focus-mode ytd-feed-filter-chip-bar-renderer,
+body.pintube-focus-mode #chips-wrapper,
+body.pintube-focus-mode yt-related-chip-cloud-renderer {
+  display: none !important;
+}
+
+/* Hide left navigation sidebar & watch page related sidebar */
+body.pintube-focus-mode #guide,
+body.pintube-focus-mode #mini-guide,
+body.pintube-focus-mode ytd-guide-renderer,
+body.pintube-focus-mode ytd-mini-guide-renderer,
+body.pintube-focus-mode #related,
+body.pintube-focus-mode ytd-watch-next-secondary-results-renderer {
+  display: none !important;
+}
+
+/* Expand video player when sidebar is hidden */
+body.pintube-focus-mode ytd-watch-flexy[flexy] #primary.ytd-watch-flexy {
+  max-width: 100% !important;
+}
+
+/* Hide Shorts shelf, navigation entries, and tagged Shorts containers */
+body.pintube-hide-shorts .pintube-is-shorts-container,
+body.pintube-hide-shorts ytd-reel-shelf-renderer,
+body.pintube-hide-shorts yt-reel-shelf-view-model,
+body.pintube-hide-shorts grid-shelf-view-model:has(a[href*="/shorts/"]),
+body.pintube-hide-shorts ytd-shelf-renderer:has(a[href*="/shorts/"]),
+body.pintube-hide-shorts ytd-rich-section-renderer:has(a[href*="/shorts/"]),
+body.pintube-hide-shorts ytd-rich-section-renderer:has(#shorts-container),
+body.pintube-hide-shorts ytd-rich-section-renderer[is-shorts],
+body.pintube-hide-shorts [is-shorts],
+body.pintube-hide-shorts ytd-guide-entry-renderer:has(a[href*="/shorts"]),
+body.pintube-hide-shorts ytd-mini-guide-entry-renderer:has(a[href*="/shorts"]),
+body.pintube-hide-shorts ytd-video-renderer:has(a[href*="/shorts/"]),
+body.pintube-hide-shorts yt-lockup-view-model:has(a[href*="/shorts/"]),
+body.pintube-hide-shorts ytd-rich-item-renderer:has(a[href*="/shorts/"]),
+body.pintube-hide-shorts ytd-grid-video-renderer:has(a[href*="/shorts/"]),
+body.pintube-hide-shorts ytd-compact-video-renderer:has(a[href*="/shorts/"]),
+body.pintube-hide-shorts ytd-reel-item-renderer {
+  display: none !important;
+}

@@ -51,13 +51,29 @@
 
 We welcome community contributions, feature ideas, bug reports, and Pull Requests!
 
-### Local Development Setup:
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/YOUR_USERNAME/pintube.git
-   ```
-2. Open `chrome://extensions`, enable **Developer mode**, click **Load unpacked**, and select the `pintube` directory.
-3. Make your edits and submit a Pull Request!
+### Project Architecture:
+```
+pintube/
+├── manifest.json            # Extension configuration (Manifest V3)
+├── background/
+│   └── service-worker.js    # Service worker (handles installation)
+├── popup/
+│   ├── popup.html           # Extension popup interface
+│   ├── popup.css            # Popup styling
+│   └── popup.js             # Toggle state & pin manager logic
+└── content/
+    └── modules/             # Modular content scripts & styles
+        ├── state.js         # Shared state & SVG constants
+        ├── metadata.js      # Video metadata & channel extraction
+        ├── overlay.js       # RAF-synced floating overlay & hover tracker
+        ├── pin-actions.js   # Pin/unpin state & storage handlers
+        ├── shelf.js         # Homepage Pinned Videos shelf renderer
+        ├── scanner.js       # DOM scanner & Shorts element tagging
+        ├── observer.js      # DOM MutationObserver & SPA navigation
+        ├── focus-mode.css   # Focus Mode & Hide Shorts rules
+        ├── endscreen.css    # End-screen overlay hiding rules
+        └── shelf.css        # Pinned shelf & card styles
+```
 
 - **Have a feature idea or bug report?** Open an Issue on GitHub.
 - **Want to contribute code?** Fork the repository, create a branch, and submit a Pull Request.

@@ -1,0 +1,268 @@
+/* PinTube – Homepage Pinned Shelf Styles */
+
+/* Shelf occupies full grid row */
+#pintube-home-shelf {
+  grid-column: 1 / -1 !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+  transition: all 0.3s ease !important;
+}
+
+/* Empty state: compact 70px banner */
+#pintube-home-shelf.pintube-empty-banner {
+  grid-column: 1 / -1 !important;
+  height: 70px !important;
+  margin: 12px 0 24px 0 !important;
+  padding: 0 20px !important;
+  background: var(--yt-spec-badge-chip-background, rgba(255, 255, 255, 0.05)) !important;
+  border: 1px solid var(--yt-spec-10-percent-layer, rgba(255, 255, 255, 0.12)) !important;
+  border-radius: 12px !important;
+  display: flex !important;
+  align-items: center !important;
+}
+
+/* Full shelf with videos */
+#pintube-home-shelf.pintube-has-pins {
+  grid-column: 1 / -1 !important;
+  width: 100% !important;
+  margin: 12px 0 32px 0 !important;
+  padding: 20px 20px 24px 20px !important;
+  background: var(--yt-spec-badge-chip-background, rgba(255, 255, 255, 0.04)) !important;
+  border: 1px solid var(--yt-spec-10-percent-layer, rgba(255, 255, 255, 0.1)) !important;
+  border-radius: 16px !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+}
+
+/* Collapsed state */
+#pintube-home-shelf.pintube-is-collapsed {
+  margin: 8px 0 16px 0 !important;
+  padding: 12px 20px !important;
+}
+
+#pintube-home-shelf.pintube-is-collapsed .pintube-shelf-header {
+  margin-bottom: 0 !important;
+  border-bottom: none !important;
+  padding-bottom: 0 !important;
+}
+
+/* Header row */
+.pintube-shelf-header {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  width: 100% !important;
+  transition: all 0.2s ease !important;
+}
+
+#pintube-home-shelf.pintube-has-pins .pintube-shelf-header {
+  margin-bottom: 18px !important;
+  border-bottom: 1px solid var(--yt-spec-10-percent-layer, rgba(255, 255, 255, 0.08)) !important;
+  padding-bottom: 12px !important;
+}
+
+.pintube-shelf-title-group {
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+}
+
+.pintube-shelf-title {
+  font-family: "YouTube Sans", "Roboto", sans-serif !important;
+  font-size: 20px !important;
+  font-weight: 700 !important;
+  color: var(--yt-spec-text-primary, #ffffff) !important;
+  margin: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+}
+
+.pintube-hint-text {
+  font-size: 13px !important;
+  color: var(--yt-spec-text-secondary, #aaa) !important;
+  font-weight: 400 !important;
+}
+
+.pintube-badge {
+  background: #ff0000 !important;
+  color: #ffffff !important;
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  padding: 2px 8px !important;
+  border-radius: 12px !important;
+}
+
+.pintube-shelf-controls {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+}
+
+.pintube-shelf-action-btn {
+  background: var(--yt-spec-badge-chip-background, rgba(255, 255, 255, 0.1)) !important;
+  color: var(--yt-spec-text-primary, #ffffff) !important;
+  border: none !important;
+  border-radius: 20px !important;
+  padding: 6px 14px !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  cursor: pointer !important;
+  transition: background 0.2s ease !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+}
+
+.pintube-shelf-action-btn:hover {
+  background: var(--yt-spec-button-chip-background-hover, rgba(255, 255, 255, 0.2)) !important;
+}
+
+/* Video grid — matches YouTube's native item-per-row variable */
+.pintube-shelf-grid {
+  display: grid !important;
+  grid-template-columns: repeat(var(--ytd-rich-grid-items-per-row, 4), minmax(0, 1fr)) !important;
+  gap: var(--ytd-rich-grid-item-margin, 16px) !important;
+  row-gap: 24px !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+.pintube-shelf-grid.pintube-collapsed {
+  display: none !important;
+}
+
+/* Video card */
+.pintube-card {
+  display: flex !important;
+  flex-direction: column !important;
+  background: transparent !important;
+  border: none !important;
+  border-radius: 0 !important;
+  position: relative !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+.pintube-card-thumb-wrapper {
+  position: relative !important;
+  width: 100% !important;
+  aspect-ratio: 16 / 9 !important;
+  background: #0f0f0f !important;
+  border-radius: 12px !important;
+  overflow: hidden !important;
+}
+
+.pintube-card-thumb {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  border-radius: 12px !important;
+  transition: transform 0.2s ease !important;
+  display: block !important;
+}
+
+.pintube-card:hover .pintube-card-thumb {
+  transform: scale(1.02) !important;
+}
+
+/* Duration badge (bottom-right of thumbnail) */
+.pintube-card-duration {
+  position: absolute !important;
+  bottom: 6px !important;
+  right: 6px !important;
+  background: rgba(0, 0, 0, 0.8) !important;
+  color: #ffffff !important;
+  font-size: 12px !important;
+  font-weight: 500 !important;
+  padding: 3px 5px !important;
+  border-radius: 4px !important;
+  line-height: 12px !important;
+  font-family: "Roboto", sans-serif !important;
+}
+
+/* Unpin button (top-left, hover-only) */
+.pintube-card-unpin-btn {
+  position: absolute !important;
+  top: 8px !important;
+  left: 8px !important;
+  background: rgba(15, 15, 15, 0.85) !important;
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
+  color: #ffffff !important;
+  border: 1.5px solid rgba(255, 255, 255, 0.3) !important;
+  border-radius: 50% !important;
+  width: 34px !important;
+  height: 34px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  cursor: pointer !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+  transition: opacity 0.2s ease, background 0.2s ease, transform 0.2s ease !important;
+  z-index: 999999999 !important;
+  padding: 0 !important;
+  outline: none !important;
+}
+
+.pintube-card-unpin-btn svg {
+  width: 18px !important;
+  height: 18px !important;
+  fill: #ffffff !important;
+}
+
+.pintube-card:hover .pintube-card-unpin-btn,
+.pintube-card-unpin-btn:hover {
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+}
+
+.pintube-card-unpin-btn:hover {
+  background: #ff0000 !important;
+  border-color: #ff3333 !important;
+  transform: scale(1.1) !important;
+}
+
+/* Metadata below thumbnail */
+.pintube-card-info {
+  padding: 10px 0 0 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 4px !important;
+  width: 100% !important;
+}
+
+.pintube-card-title {
+  font-family: "Roboto", sans-serif !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  color: var(--yt-spec-text-primary, #f1f1f1) !important;
+  line-height: 20px !important;
+  max-height: 40px !important;
+  display: -webkit-box !important;
+  -webkit-line-clamp: 2 !important;
+  -webkit-box-orient: vertical !important;
+  overflow: hidden !important;
+  text-decoration: none !important;
+}
+
+.pintube-card-title:hover {
+  color: #ffffff !important;
+}
+
+.pintube-card-channel {
+  font-family: "Roboto", sans-serif !important;
+  font-size: 12px !important;
+  color: var(--yt-spec-text-secondary, #aaa) !important;
+  line-height: 18px !important;
+  display: block !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  margin-top: 2px !important;
+}

@@ -24,14 +24,20 @@
   },
   "content_scripts": [
     {
-      "matches": [
-        "https://www.youtube.com/*"
-      ],
+      "matches": ["https://www.youtube.com/*"],
       "css": [
-        "content/content.css"
+        "content/modules/endscreen.css",
+        "content/modules/focus-mode.css",
+        "content/modules/shelf.css"
       ],
       "js": [
-        "content/content.js"
+        "content/modules/state.js",
+        "content/modules/metadata.js",
+        "content/modules/overlay.js",
+        "content/modules/pin-actions.js",
+        "content/modules/shelf.js",
+        "content/modules/scanner.js",
+        "content/modules/observer.js"
       ],
       "run_at": "document_idle"
     }

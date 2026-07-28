@@ -1,0 +1,22 @@
+/* PinTube – Hide End-Screen Overlays & Suggestions
+   CSS-only approach — no JS polling needed. */
+
+.ytp-endscreen-content,
+.ytp-ce-element,
+.ytp-ce-covering-overlay,
+.ytp-ce-element-show,
+.ytp-videowall-endscreen,
+.ytp-videowall-still,
+.html5-endscreen,
+.ytp-upnext,
+.ytp-pause-overlay,
+.ytp-pause-overlay-container,
+.ytp-suggestion-set,
+.ytp-autonav-endscreen,
+a.ytp-videowall-still,
+.ytp-show-tiles {
+  display: none !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  visibility: hidden !important;
+}
