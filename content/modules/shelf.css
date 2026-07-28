@@ -1,4 +1,4 @@
-/* PinTube – Homepage Pinned Shelf Styles */
+/* PinTube – Homepage Pinned Shelf Styles (Light & Dark Theme Responsive) */
 
 /* Shelf occupies full grid row */
 #pintube-home-shelf {
@@ -7,6 +7,25 @@
   max-width: 100% !important;
   box-sizing: border-box !important;
   transition: all 0.3s ease !important;
+
+  /* Theme variables — Light Mode defaults */
+  --pintube-shelf-bg: var(--yt-spec-badge-chip-background, rgba(0, 0, 0, 0.05));
+  --pintube-shelf-border: var(--yt-spec-10-percent-layer, rgba(0, 0, 0, 0.12));
+  --pintube-text-primary: var(--yt-spec-text-primary, #0f0f0f);
+  --pintube-text-secondary: var(--yt-spec-text-secondary, #606060);
+  --pintube-btn-bg: var(--yt-spec-badge-chip-background, rgba(0, 0, 0, 0.06));
+  --pintube-btn-hover: var(--yt-spec-button-chip-background-hover, rgba(0, 0, 0, 0.12));
+}
+
+/* Dark Mode Theme Overrides */
+html[dark] #pintube-home-shelf,
+[dark] #pintube-home-shelf {
+  --pintube-shelf-bg: var(--yt-spec-badge-chip-background, rgba(255, 255, 255, 0.04));
+  --pintube-shelf-border: var(--yt-spec-10-percent-layer, rgba(255, 255, 255, 0.1));
+  --pintube-text-primary: var(--yt-spec-text-primary, #ffffff);
+  --pintube-text-secondary: var(--yt-spec-text-secondary, #aaa);
+  --pintube-btn-bg: var(--yt-spec-badge-chip-background, rgba(255, 255, 255, 0.1));
+  --pintube-btn-hover: var(--yt-spec-button-chip-background-hover, rgba(255, 255, 255, 0.2));
 }
 
 /* Empty state: compact 70px banner */
@@ -15,8 +34,8 @@
   height: 70px !important;
   margin: 12px 0 24px 0 !important;
   padding: 0 20px !important;
-  background: var(--yt-spec-badge-chip-background, rgba(255, 255, 255, 0.05)) !important;
-  border: 1px solid var(--yt-spec-10-percent-layer, rgba(255, 255, 255, 0.12)) !important;
+  background: var(--pintube-shelf-bg) !important;
+  border: 1px solid var(--pintube-shelf-border) !important;
   border-radius: 12px !important;
   display: flex !important;
   align-items: center !important;
@@ -28,10 +47,10 @@
   width: 100% !important;
   margin: 12px 0 32px 0 !important;
   padding: 20px 20px 24px 20px !important;
-  background: var(--yt-spec-badge-chip-background, rgba(255, 255, 255, 0.04)) !important;
-  border: 1px solid var(--yt-spec-10-percent-layer, rgba(255, 255, 255, 0.1)) !important;
+  background: var(--pintube-shelf-bg) !important;
+  border: 1px solid var(--pintube-shelf-border) !important;
   border-radius: 16px !important;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15) !important;
   backdrop-filter: blur(12px) !important;
   -webkit-backdrop-filter: blur(12px) !important;
 }
@@ -59,7 +78,7 @@
 
 #pintube-home-shelf.pintube-has-pins .pintube-shelf-header {
   margin-bottom: 18px !important;
-  border-bottom: 1px solid var(--yt-spec-10-percent-layer, rgba(255, 255, 255, 0.08)) !important;
+  border-bottom: 1px solid var(--pintube-shelf-border) !important;
   padding-bottom: 12px !important;
 }
 
@@ -73,7 +92,7 @@
   font-family: "YouTube Sans", "Roboto", sans-serif !important;
   font-size: 20px !important;
   font-weight: 700 !important;
-  color: var(--yt-spec-text-primary, #ffffff) !important;
+  color: var(--pintube-text-primary) !important;
   margin: 0 !important;
   display: flex !important;
   align-items: center !important;
@@ -82,7 +101,7 @@
 
 .pintube-hint-text {
   font-size: 13px !important;
-  color: var(--yt-spec-text-secondary, #aaa) !important;
+  color: var(--pintube-text-secondary) !important;
   font-weight: 400 !important;
 }
 
@@ -102,9 +121,9 @@
 }
 
 .pintube-shelf-action-btn {
-  background: var(--yt-spec-badge-chip-background, rgba(255, 255, 255, 0.1)) !important;
-  color: var(--yt-spec-text-primary, #ffffff) !important;
-  border: none !important;
+  background: var(--pintube-btn-bg) !important;
+  color: var(--pintube-text-primary) !important;
+  border: 1px solid var(--pintube-shelf-border) !important;
   border-radius: 20px !important;
   padding: 6px 14px !important;
   font-size: 13px !important;
@@ -117,7 +136,7 @@
 }
 
 .pintube-shelf-action-btn:hover {
-  background: var(--yt-spec-button-chip-background-hover, rgba(255, 255, 255, 0.2)) !important;
+  background: var(--pintube-btn-hover) !important;
 }
 
 /* Video grid — matches YouTube's native item-per-row variable */
@@ -241,7 +260,7 @@
   font-family: "Roboto", sans-serif !important;
   font-size: 14px !important;
   font-weight: 500 !important;
-  color: var(--yt-spec-text-primary, #f1f1f1) !important;
+  color: var(--pintube-text-primary) !important;
   line-height: 20px !important;
   max-height: 40px !important;
   display: -webkit-box !important;
@@ -252,13 +271,14 @@
 }
 
 .pintube-card-title:hover {
-  color: #ffffff !important;
+  color: var(--pintube-text-primary) !important;
+  opacity: 0.85 !important;
 }
 
 .pintube-card-channel {
   font-family: "Roboto", sans-serif !important;
   font-size: 12px !important;
-  color: var(--yt-spec-text-secondary, #aaa) !important;
+  color: var(--pintube-text-secondary) !important;
   line-height: 18px !important;
   display: block !important;
   white-space: nowrap !important;
@@ -266,3 +286,4 @@
   text-overflow: ellipsis !important;
   margin-top: 2px !important;
 }
+

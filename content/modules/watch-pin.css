@@ -1,4 +1,4 @@
-/* PinTube – Watch Page Pin Button Styles */
+/* PinTube – Watch Page Pin Button Styles (Light & Dark Theme Responsive) */
 
 .pintube-watch-pin-btn {
   display: inline-flex !important;
@@ -10,9 +10,17 @@
   margin-left: 8px !important;
   margin-right: 8px !important;
   border-radius: 18px !important;
-  background: var(--yt-spec-badge-chip-background, rgba(255, 255, 255, 0.1)) !important;
-  border: 1px solid var(--yt-spec-10-percent-layer, rgba(255, 255, 255, 0.15)) !important;
-  color: var(--yt-spec-text-primary, #ffffff) !important;
+
+  /* Theme variables — Light Mode defaults */
+  --pintube-watch-bg: var(--yt-spec-badge-chip-background, rgba(0, 0, 0, 0.05));
+  --pintube-watch-border: var(--yt-spec-10-percent-layer, rgba(0, 0, 0, 0.12));
+  --pintube-watch-text: var(--yt-spec-text-primary, #0f0f0f);
+  --pintube-watch-hover: var(--yt-spec-button-chip-background-hover, rgba(0, 0, 0, 0.1));
+
+  background: var(--pintube-watch-bg) !important;
+  border: 1px solid var(--pintube-watch-border) !important;
+  color: var(--pintube-watch-text) !important;
+
   font-family: "Roboto", sans-serif !important;
   font-size: 14px !important;
   font-weight: 500 !important;
@@ -24,8 +32,17 @@
   z-index: 10 !important;
 }
 
+/* Dark Mode Theme Overrides */
+html[dark] .pintube-watch-pin-btn,
+[dark] .pintube-watch-pin-btn {
+  --pintube-watch-bg: var(--yt-spec-badge-chip-background, rgba(255, 255, 255, 0.1));
+  --pintube-watch-border: var(--yt-spec-10-percent-layer, rgba(255, 255, 255, 0.15));
+  --pintube-watch-text: var(--yt-spec-text-primary, #ffffff);
+  --pintube-watch-hover: var(--yt-spec-button-chip-background-hover, rgba(255, 255, 255, 0.2));
+}
+
 .pintube-watch-pin-btn:hover {
-  background: var(--yt-spec-button-chip-background-hover, rgba(255, 255, 255, 0.2)) !important;
+  background: var(--pintube-watch-hover) !important;
   transform: scale(1.03) !important;
 }
 
@@ -33,7 +50,7 @@
   background: #ff0000 !important;
   border-color: #ff3333 !important;
   color: #ffffff !important;
-  box-shadow: 0 2px 10px rgba(255, 0, 0, 0.5) !important;
+  box-shadow: 0 2px 10px rgba(255, 0, 0, 0.4) !important;
 }
 
 .pintube-watch-pin-btn.pintube-pinned:hover {
@@ -46,3 +63,4 @@
   height: 18px !important;
   fill: currentColor !important;
 }
+
