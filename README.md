@@ -22,26 +22,30 @@
 
 ## ✨ Features & How to Use Them
 
-### 📌 1. Pinning Videos
+### 📌 1. Pinning Video Thumbnails
 - **How to use**: Hover over any video thumbnail on YouTube (Home feed, Search results, or Recommendations) and click the **📌 Pin** button at the top-left corner.
 - **Visual Feedback**: Pinned videos display an **🗑️ Unpin** icon so you can toggle pin status anytime.
 
-### 🏠 2. Homepage Pinned Shelf
+### 📺 2. Watch Page Dedicated Pin Button
+- **How to use**: On any video watch page (`/watch?v=...`), look right next to the **Subscribe** button for the native-styled **📌 Pin** / **📌 Pinned** pill button.
+- **What it does**: Pin or unpin the currently playing video directly to your homepage shelf with one click.
+
+### 🏠 3. Homepage Pinned Shelf
 - **How to use**: Visit YouTube's homepage to view your custom **📌 Pinned Videos** shelf at the top of your feed.
 - **Collapsible**: Click **Hide / Show** on the top right of the shelf to collapse or expand it whenever needed.
 
-### 🎯 3. Focus Mode (Distraction-Free YouTube)
+### 🎯 4. Focus Mode (Distraction-Free YouTube)
 - **How to use**: Click the PinTube extension icon in your Chrome toolbar and toggle **🎯 Focus Mode** ON.
 - **What it does**: 
   - Hides the endless homepage recommendation feed — **only your Pinned Videos shelf is shown**.
   - Hides topic filter chips (*"All"*, *"Music"*, etc.), left navigation sidebar, and watch-page related recommendations.
   - Keeps the **top Search Bar 100% active** for intentional searching.
 
-### 🚫 4. Hide Shorts
+### 🚫 5. Hide Shorts
 - **How to use**: Click the PinTube extension icon in your Chrome toolbar and toggle **🚫 Hide Shorts** ON.
 - **What it does**: Instantly removes all Shorts shelves, recommendation reels, and sidebar items across YouTube in real time.
 
-### 🎬 5. Auto Theater Mode & Clean Player
+### 🎬 6. Auto Theater Mode & Clean Player
 - **How to use**: Runs automatically on video watch pages.
 - **What it does**: Automatically opens videos in **Theater Mode** and suppresses end-screen recommended video popups when playback finishes.
 
@@ -66,12 +70,14 @@ pintube/
         ├── state.js         # Shared state & SVG constants
         ├── metadata.js      # Video metadata & channel extraction
         ├── overlay.js       # RAF-synced floating overlay & hover tracker
+        ├── watch-pin.js     # Watch page pin button (injected next to Subscribe)
         ├── pin-actions.js   # Pin/unpin state & storage handlers
         ├── shelf.js         # Homepage Pinned Videos shelf renderer
         ├── scanner.js       # DOM scanner & Shorts element tagging
         ├── observer.js      # DOM MutationObserver & SPA navigation
         ├── focus-mode.css   # Focus Mode & Hide Shorts rules
         ├── endscreen.css    # End-screen overlay hiding rules
+        ├── watch-pin.css    # Watch page pin button styles
         └── shelf.css        # Pinned shelf & card styles
 ```
 
