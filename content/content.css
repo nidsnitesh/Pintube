@@ -73,7 +73,7 @@ body.pintube-hide-shorts ytd-mini-guide-entry-renderer:has(a[href*="/shorts"]) {
   position: absolute !important;
   top: 8px !important;
   left: 8px !important;
-  z-index: 99999 !important;
+  z-index: 20 !important; /* Low enough to stay under YouTube sidebar drawer & top masthead header */
   display: flex !important;
   align-items: center !important;
   gap: 4px !important;
@@ -346,7 +346,7 @@ a:hover > .pintube-btn-container,
   cursor: pointer !important;
   opacity: 0.9 !important;
   transition: opacity 0.2s ease, background 0.2s ease, transform 0.2s ease !important;
-  z-index: 100 !important;
+  z-index: 10 !important;
   padding: 0 !important;
   outline: none !important;
 }
