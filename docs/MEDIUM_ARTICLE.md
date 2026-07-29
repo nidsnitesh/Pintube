@@ -14,13 +14,23 @@ As engineers and knowledge workers, we use YouTube for high-value learning: soft
 2. **The "Watch Later" Black Hole**: When you encounter a high-value 40-minute lecture while working, saving it to YouTube’s native *Watch Later* playlist creates a high-friction storage sink. Playlists become unorganized dumping grounds with zero visual priority.
 3. **Tab Proliferation**: The default fallback for saving video context is keeping tabs open. This degrades browser performance, causes memory pressure, and fragments your workflow.
 
-I wanted a minimal, deterministic workflow: **The ability to pin high-priority videos directly to the top of YouTube’s primary viewport, eliminate low-value algorithmic distractions, and maintain full control over interface state.**
+---
+
+## 2. Why Existing Extensions Weren't Enough
+
+Before writing a single line of code, I audited existing Chrome extensions for pinning or hiding YouTube content. I found they fell short in several key areas:
+
+- **Fragmented Surface Support**: Most extensions only worked on the homepage thumbnail grid. They broke on search results (`/results`), recommendation sidebars, or when watching a video on `/watch`.
+- **Fragile DOM Rendering & Autoplay Breaks**: Existing tools broke when YouTube triggered inline video autoplay previews (`ytd-inline-preview-renderer`), causing buttons to be covered or drift during page scroll.
+- **Limited Scope & Missing Focus Controls**: They provided isolated button tweaks rather than a cohesive **Focus Engine** — lacking real-time Shorts removal across left drawers, feed suppression, and native theme integration.
+
+I wanted a unified, production-grade system designed around a clear mission: **reclaiming intentionality on YouTube and turning it into a focused, distraction-free productivity tool — something sorely missing in today's algorithmic web.**
 
 That led to the design and implementation of **PinTube**.
 
 ---
 
-## 2. Product Design Philosophy: Intentionality over Algorithmic Feed
+## 3. Product Design Philosophy: Intentionality over Algorithmic Feed
 
 PinTube is designed around three core UX principles:
 
@@ -30,7 +40,7 @@ PinTube is designed around three core UX principles:
 
 ---
 
-## 3. Surface Architecture & Feature Overview
+## 4. Surface Architecture & Feature Overview
 
 ![PinTube Architecture](https://raw.githubusercontent.com/nidsnitesh/Pintube/main/icons/icon128.png)
 
@@ -51,7 +61,7 @@ Enforces Theater Mode layout (`ytd-watch-flexy[theater]`) on navigation and supp
 
 ---
 
-## 4. Technical Architecture & Engineering Challenges
+## 5. Technical Architecture & Engineering Challenges
 
 Building extension scripts on YouTube’s modern Polymer / Web Component Single Page Application (SPA) presents complex front-end engineering constraints. Below are the key architectural challenges and how they were solved.
 
@@ -62,7 +72,7 @@ Building extension scripts on YouTube’s modern Polymer / Web Component Single 
 #### The Problem:
 YouTube’s homepage implements inline video preview renders (`ytd-inline-preview-renderer`). When a user hovers over a thumbnail for >1 second, YouTube instantiates a separate Web Component containing an HTML5 video iframe. 
 
-If you inject an overlay button into the thumbnail element (`ytd-thumbnail`), YouTube’s preview player creates a isolated stacking context that paints over the button. Conversely, using standard `position: fixed` CSS relative to `document.body` solves the stacking context issue, but introduces severe **scroll drift** because YouTube executes page scrolling inside custom nested containers (`ytd-app`).
+If you inject an overlay button into the thumbnail element (`ytd-thumbnail`), YouTube’s preview player creates an isolated stacking context that paints over the button. Conversely, using standard `position: fixed` CSS relative to `document.body` solves the stacking context issue, but introduces severe **scroll drift** because YouTube executes page scrolling inside custom nested containers (`ytd-app`).
 
 #### The Architectural Solution:
 Instead of fighting YouTube’s internal DOM hierarchy or competing in z-index wars, PinTube decouples the overlay element entirely:
@@ -169,10 +179,21 @@ This approach guarantees zero theme flash, crisp typography, and automatic adapt
 
 ---
 
+## 🔮 What’s Next: Future Functionality & Roadmap
+
+PinTube v1.0 is just the beginning. The goal is to build an intelligent, focus-first layer for video-based learning. Future releases will include:
+
+- **📂 Topic-Based Pinned Queues**: Group your pinned videos into custom categories (e.g., *"System Design"*, *"Machine Learning"*, *"Music"*).
+- **⏱️ Intentional Session Timers & Focus Presets**: Set custom learning session timers that automatically remind you when your intended study window concludes.
+- **📚 Smart Queue Auto-Archiving**: Automatically unpin or archive videos once watched to keep your homepage queue lean.
+- **⚡ Keyboard Shortcuts & Quick Search**: Quick-pin hotkeys and inline search filters for your pinned collection.
+
+---
+
 ## 🏪 Distribution & Marketplace Roadmap
 
 ### 📢 Chrome Web Store Release (Coming Soon!)
-PinTube is currently undergoing review for official publication on the **Google Chrome Web Store**. Once published, users will be able to install PinTube with a single click and receive automatic background updates.
+PinTube is currently undergoing review for official publication on the **Google Chrome Web Store**. Once published, users will be able to install PinTube with a single click and receive automatic background updates!
 
 ### ⚡ Developer Early Access (GitHub Releases)
 While the marketplace review is finalizing, developers and early adopters can install PinTube today via **GitHub Releases**:
@@ -192,4 +213,4 @@ PinTube demonstrates that with proper architectural patterns — root stacking c
 - ⭐️ **GitHub Repository**: [https://github.com/nidsnitesh/Pintube](https://github.com/nidsnitesh/Pintube)
 - 📦 **Latest Release Asset**: [https://github.com/nidsnitesh/Pintube/releases](https://github.com/nidsnitesh/Pintube/releases)
 
-*Stay tuned for the official Chrome Store release announcement! Feedback, architecture discussions, and Pull Requests are welcome.* 📌
+*Stay tuned for the official Chrome Store release announcement! Feedback, feature requests, and Pull Requests are welcome.* 📌
