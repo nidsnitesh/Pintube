@@ -1,88 +1,83 @@
-# 📌 How I Built PinTube: A Chrome Extension to Pin YouTube Videos & Curate a Focus Feed
+# YouTube’s Feed Was Ruining My Focus. So I Engineered My Own UI.
 
-*Take back control of your YouTube experience with video pinning, focus mode, and Shorts removal — built with Manifest V3.*
-
----
-
-## 🧠 The Motivation: Escaping YouTube’s Infinite Feed Trap
-
-YouTube is an unmatched repository of human knowledge. From deep-dive software architecture lectures and MIT coursework to music production tutorials, almost everything you want to learn is available for free.
-
-However, YouTube's interface is engineered for a very different purpose: **maximizing watch time through endless algorithmic recommendations.**
-
-We’ve all experienced this workflow:
-1. You open YouTube intending to search for a specific tutorial or coding concept.
-2. Before your fingers even reach the search bar, the homepage grid bombards you with 12 high-dopamine thumbnails designed to hijack your attention.
-3. You spot a genuinely interesting 40-minute documentary or lecture you *actually* want to watch later.
-4. You either:
-   - **Open it in a new tab** (adding to your collection of 60 open tabs that slow down your browser),
-   - **Save it to a Watch Later playlist** (a black hole where videos go to be forgotten forever), or
-   - **Do nothing** and lose track of it when the page refreshes.
-
-I wanted a simpler, more intentional way to use YouTube. I asked myself a basic design question: 
-
-> **What if you could pin videos directly to the top of your YouTube homepage — just like pinned tweets on Twitter/X or pinned tabs in Chrome?**
-
-That idea led me to build **PinTube**.
+*How I built PinTube — a production-grade, privacy-first Manifest V3 extension that reclaims intentionality from YouTube’s attention economy.*
 
 ---
 
-## 🛠️ What is PinTube?
+## 1. The Problem: The Cognitive Friction of Algorithmic Interfaces
 
-**PinTube** is an open-source, privacy-first Google Chrome extension built with Manifest V3. It transforms YouTube into a personal, distraction-free productivity space by allowing you to pin videos, hide algorithmic feeds, and remove short-form video traps.
+Modern consumer web platforms are engineered around a single metric: **user engagement optimization**. YouTube’s front-end architecture is a masterclass in behavioral psychology — every pixel of the homepage grid, every recommendation sidebar, and every short-form video shelf is optimized to minimize friction between sessions and maximize watch time.
+
+As engineers and knowledge workers, we use YouTube for high-value learning: software architecture deep-dives, compiler theory, system design, and technical talks. However, the interface creates severe cognitive friction:
+
+1. **Context Switching & Attention Hijacking**: You open YouTube with a single task in mind (e.g., watching a talk on distributed consensus). Before you can focus on the search bar, 12 algorithmically selected thumbnails compete for your visual attention.
+2. **The "Watch Later" Black Hole**: When you encounter a high-value 40-minute lecture while working, saving it to YouTube’s native *Watch Later* playlist creates a high-friction storage sink. Playlists become unorganized dumping grounds with zero visual priority.
+3. **Tab Proliferation**: The default fallback for saving video context is keeping tabs open. This degrades browser performance, causes memory pressure, and fragments your workflow.
+
+I wanted a minimal, deterministic workflow: **The ability to pin high-priority videos directly to the top of YouTube’s primary viewport, eliminate low-value algorithmic distractions, and maintain full control over interface state.**
+
+That led to the design and implementation of **PinTube**.
+
+---
+
+## 2. Product Design Philosophy: Intentionality over Algorithmic Feed
+
+PinTube is designed around three core UX principles:
+
+1. **Zero-Latency In-Context Pinning**: Pinning a video must be an inline, single-click action across all YouTube surfaces (homepage, search results, video player, and recommendation sidebars).
+2. **Intent-Driven Surface Elimination (Focus Mode)**: The user should be able to disable algorithmic recommendations entirely, reducing YouTube to two components: **a pinned video queue** and **the search bar**.
+3. **Zero External Dependencies & Absolute Privacy**: No telemetry, no third-party analytics, no backend infrastructure. State synchronization must rely entirely on local storage contracts (`chrome.storage.sync`).
+
+---
+
+## 3. Surface Architecture & Feature Overview
 
 ![PinTube Architecture](https://raw.githubusercontent.com/nidsnitesh/Pintube/main/icons/icon128.png)
 
-### ✨ Core Features Walkthrough
+### 📌 1. Universal Thumbnail & Player Surface Pinning
+Hovering over any video card across YouTube (Home feed, `/results` search grids, or related video sidebars) exposes a high-contrast inline **Pin** action. Additionally, on watch pages (`/watch?v=...`), a native-styled **📌 Pin / Pinned** action button is injected directly into YouTube’s primary video metadata bar, right next to the channel Subscribe button.
 
-#### 1. 📌 Pin Videos Anywhere on YouTube
-Whether you're browsing the homepage, scrolling through search results (`/results`), or checking recommendation sidebars, hovering over any video thumbnail reveals an instant **📌 Pin** button at the top-left corner. 
-- Pinned videos update visual state dynamically across all open tabs.
-- Clicking **Unpin** removes the video instantly.
+### 🏠 2. The Homepage Pinned Shelf
+A custom, responsive CSS Grid component (`#pintube-home-shelf`) injected at the top of YouTube’s main `#contents` renderer. It mirrors YouTube’s native responsive grid tokens (`var(--ytd-rich-grid-items-per-row)`) for a seamless look and feel. Includes a collapsible state toggle for zero-visual-noise workflows.
 
-#### 2. 📺 Dedicated Watch Page Pin Button
-When watching a video on `/watch?v=...`, you don't need to hover over thumbnails. PinTube injects a native-styled **📌 Pin / Pinned** pill button directly onto YouTube’s action bar — positioned right next to the **Subscribe** button.
+### 🎯 3. Focus Mode
+Toggling Focus Mode completely suppresses YouTube's primary recommendation engine (`ytd-rich-grid-row`, `ytd-rich-section-renderer`), category chip bars (`ytd-feed-filter-chip-bar-renderer`), and sidebar recommendations (`#related`). YouTube becomes a clean productivity dashboard centered on your pinned queue and search input.
 
-#### 3. 🏠 Custom Homepage Pinned Shelf
-When you visit YouTube’s homepage, PinTube injects a clean, collapsible **📌 Pinned Videos** grid shelf at the very top of your feed:
-- Shows full metadata including thumbnail, video title, channel name, and exact video duration.
-- Includes a **Hide / Show** toggle button to collapse the shelf whenever you want a completely clean screen.
-- Displays an empty state banner with usage hints when 0 videos are pinned.
+### 🚫 4. Real-Time Shorts Elimination
+Eliminates short-form video elements (`ytd-reel-shelf-renderer`, `yt-reel-shelf-view-model`, `ytd-reel-item-renderer`) across all viewports, including dynamic navigation drawers (`#guide` and `#mini-guide`).
 
-#### 4. 🎯 Focus Mode (Intentional YouTube)
-Toggle **Focus Mode ON** from the PinTube Chrome popup to turn off YouTube’s algorithm:
-- Hides the endless homepage recommendation grid — **only your Pinned Videos shelf is displayed**.
-- Hides topic filter chips (*"All"*, *"Music"*, *"Live"*, etc.), left navigation sidebars, and watch page recommendation columns.
-- Keeps the **top Search Bar 100% active** so you only watch what you intentionally search for.
-
-#### 5. 🚫 Real-time Shorts Remover
-Short-form content is one of the biggest attention traps on the web. Toggle **Hide Shorts ON** to cleanly eliminate:
-- Homepage Shorts section rows.
-- Search result Shorts shelves (`ytd-reel-shelf-renderer` & `yt-lockup-view-model`).
-- Left navigation drawer Shorts tabs (`#guide` and `#mini-guide`).
-
-#### 6. 🎬 Auto Theater Mode & Clean Endscreen
-Runs automatically on video watch pages:
-- Automatically switches videos into **Theater Mode** for an immersive viewing experience.
-- Suppresses end-screen recommendation tiles and video wall popups when playback completes.
+### 🎬 5. Automated Watch Page Cleanup
+Enforces Theater Mode layout (`ytd-watch-flexy[theater]`) on navigation and suppresses end-screen overlay grids (`.ytp-endscreen-content`) upon video completion.
 
 ---
 
-## 🔬 Engineering & Architecture Deep Dive
+## 4. Technical Architecture & Engineering Challenges
 
-Building a Chrome extension for a dynamic Single Page Application (SPA) like YouTube presents severe DOM mutation, web performance, and CSS stacking context challenges. Here is how PinTube solves them:
+Building extension scripts on YouTube’s modern Polymer / Web Component Single Page Application (SPA) presents complex front-end engineering constraints. Below are the key architectural challenges and how they were solved.
 
-### 1. Solving the Autoplay Iframe Stacking Context (RAF 60fps Position Sync)
+---
 
-YouTube’s homepage uses `ytd-inline-preview-renderer` for inline video previews on hover. When autoplay triggers, YouTube creates a new web component with a high z-index and iframe video player that covers any DOM elements injected inside the thumbnail.
+### Challenge A: Stacking Context Isolation & Viewport Synchronization (RAF 60fps Loop)
 
-If you inject buttons inside the thumbnail DOM (`ytd-thumbnail`), YouTube’s preview renderer paints over them. If you use standard `position: fixed` CSS on `document.body`, the button drifts during page scroll because scroll events in YouTube occur inside inner custom scrollers (`ytd-app`).
+#### The Problem:
+YouTube’s homepage implements inline video preview renders (`ytd-inline-preview-renderer`). When a user hovers over a thumbnail for >1 second, YouTube instantiates a separate Web Component containing an HTML5 video iframe. 
 
-#### The Solution:
-PinTube uses a root-level `position: fixed` overlay mounted directly on `document.body` (giving it root stacking context above all YouTube elements), combined with a **`requestAnimationFrame` (RAF) 60fps position loop**:
+If you inject an overlay button into the thumbnail element (`ytd-thumbnail`), YouTube’s preview player creates a isolated stacking context that paints over the button. Conversely, using standard `position: fixed` CSS relative to `document.body` solves the stacking context issue, but introduces severe **scroll drift** because YouTube executes page scrolling inside custom nested containers (`ytd-app`).
+
+#### The Architectural Solution:
+Instead of fighting YouTube’s internal DOM hierarchy or competing in z-index wars, PinTube decouples the overlay element entirely:
+
+1. **Root Stacking Context Mount**: The floating overlay (`#pintube-floating-overlay`) is mounted directly on `document.body`, placing it in the top-level document stacking context above any nested shadow root or iframe.
+2. **60fps Viewport RAF Synchronization**: When a card is hovered, PinTube initiates a non-blocking `requestAnimationFrame` loop that calculates the target thumbnail's live viewport bounding box (`getBoundingClientRect()`) and updates the overlay coordinates in real time.
 
 ```javascript
-// Floating Overlay Position Sync Loop (modules/overlay.js)
+// content/modules/overlay.js
+
+let floatingOverlay = null;
+let activeCard = null;
+let activeThumb = null;
+let rafId = null;
+
 function syncOverlayPosition() {
   if (!activeCard || !floatingOverlay) return;
   const rect = (activeThumb || activeCard).getBoundingClientRect();
@@ -100,45 +95,56 @@ function startRAFSync() {
 }
 ```
 
-- **Root Stacking Context**: Being on `document.body`, the button is never covered by inline preview iframes.
-- **Pixel-Perfect Scroll Locking**: The 60fps RAF loop queries `getBoundingClientRect()` live, keeping the overlay locked to the thumbnail's top-left corner during any scroll action with zero drift.
+#### Why This Works:
+- **Zero Layout Thrashing**: Querying `getBoundingClientRect()` inside a RAF callback avoids synchronous layout forcing.
+- **Iframe Immunity**: Mouse movement tracking uses a passive document-level listener (`mousemove`), checking viewport bounds directly to survive iframe event capture during autoplay previews.
 
 ---
 
-### 2. Clean Manifest V3 Modular Architecture
+### Challenge B: Modular Manifest V3 Content Script Architecture
 
-Rather than maintaining a monolithic 1500-line content script, PinTube uses a clean modular structure where each file handles a single responsibility:
+To maintain strict separation of concerns, the content layer is split into specialized single-responsibility modules injected sequentially via Manifest V3 `content_scripts`:
 
 ```
 pintube/
-├── manifest.json            # Extension configuration (Manifest V3)
+├── manifest.json            # Manifest V3 entry & permissions
 ├── background/
-│   └── service-worker.js    # Service worker
+│   └── service-worker.js    # Lifecycle event listener
 ├── popup/
-│   ├── popup.html           # Popup UI
-│   ├── popup.css            # Popup styling
-│   └── popup.js             # Toggle states & storage sync
+│   ├── popup.html           # Management popup interface
+│   ├── popup.css            # Dark/light themed popup styling
+│   └── popup.js             # Storage state controller
 └── content/
-    └── modules/             # Modular content scripts & styles
-        ├── state.js         # Shared mutable state & SVG icons
-        ├── metadata.js      # Video metadata & channel extraction
-        ├── overlay.js       # RAF-synced floating overlay & hover tracker
-        ├── watch-pin.js     # Watch page pin button (next to Subscribe)
-        ├── pin-actions.js   # Pin/unpin state & storage handlers
-        ├── shelf.js         # Homepage Pinned Videos shelf renderer
-        ├── scanner.js       # DOM scanner & Shorts element tagging
-        ├── observer.js      # DOM MutationObserver & SPA navigation
-        ├── focus-mode.css   # Focus Mode & Hide Shorts rules
-        ├── endscreen.css    # End-screen overlay hiding rules
-        ├── watch-pin.css    # Watch page pin button styles
-        └── shelf.css        # Pinned shelf & card styles
+    └── modules/             # Modular content runtime
+        ├── state.js         # Shared mutable state & SVG assets
+        ├── metadata.js      # Robust DOM metadata extraction
+        ├── overlay.js       # RAF-synced floating overlay controller
+        ├── watch-pin.js     # Watch page metadata & button injector
+        ├── pin-actions.js   # Storage CRUD & state mutation dispatch
+        ├── shelf.js         # Virtualized homepage grid renderer
+        ├── scanner.js       # DOM scanner & Web Component tagger
+        ├── observer.js      # SPA navigation & MutationObserver
+        ├── focus-mode.css   # Focus Mode & Shorts removal rules
+        ├── endscreen.css    # Endscreen overlay suppression
+        ├── watch-pin.css    # Watch page pill action styling
+        └── shelf.css        # Responsive shelf grid layout
 ```
 
 ---
 
-### 3. Dynamic Light & Dark Theme Support
+### Challenge C: SPA Navigation & Memory Leak Mitigation
 
-YouTube supports both Light and Dark themes. Instead of hardcoding background or text colors, PinTube utilizes CSS custom properties with theme fallbacks:
+YouTube is a custom Single Page Application that navigates using custom history events (`yt-navigate-finish`) without full page reloads.
+
+#### Mitigating Memory Leaks:
+- **Debounced DOM MutationObserver**: The DOM observer ignores mutations generated by PinTube’s own UI (`#pintube-home-shelf`, `.pintube-btn-container`) to prevent recursive observer loops.
+- **Idempotent Card Tagging**: Processed cards are tagged with `data-pintube-processed="true"`, ensuring DOM node queries remain \(O(N)\) over newly added nodes rather than re-evaluating the full tree.
+
+---
+
+### Challenge D: Zero-Runtime Theme Engine (Light & Dark Mode)
+
+Rather than executing JavaScript theme checks on every render cycle, PinTube leverages YouTube's internal CSS Custom Property contracts:
 
 ```css
 /* Light Mode Defaults */
@@ -159,42 +165,31 @@ html[dark] #pintube-home-shelf,
 }
 ```
 
-This guarantees high-contrast, crisp text rendering whether you use YouTube in Light or Dark Mode.
+This approach guarantees zero theme flash, crisp typography, and automatic adaptation when a user toggles YouTube’s appearance settings.
 
 ---
 
-## 🔒 Privacy-First Design
+## 🏪 Distribution & Marketplace Roadmap
 
-PinTube is **100% private and open source**:
-- No external server connections.
-- No analytics or data tracking.
-- All pinned videos and toggle states are stored strictly in your browser via `chrome.storage.sync`.
+### 📢 Chrome Web Store Release (Coming Soon!)
+PinTube is currently undergoing review for official publication on the **Google Chrome Web Store**. Once published, users will be able to install PinTube with a single click and receive automatic background updates.
 
----
+### ⚡ Developer Early Access (GitHub Releases)
+While the marketplace review is finalizing, developers and early adopters can install PinTube today via **GitHub Releases**:
 
-## 🏪 Chrome Web Store & Early Access
-
-### 📢 Chrome Extension Marketplace Coming Soon!
-PinTube is currently undergoing submission for the official **Google Chrome Web Store**. Once published, users will be able to install PinTube with a single click from the Chrome Marketplace and receive **100% automatic background updates**!
-
-### ⚡ Try it Now via GitHub Early Access!
-While the official Chrome Web Store listing is being finalized, you can try PinTube right now via **GitHub Releases**:
-
-1. Visit the **[PinTube GitHub Releases](https://github.com/nidsnitesh/Pintube/releases)** page.
-2. Download the latest **`pintube-extension.zip`** asset.
-3. Unzip the file on your computer.
-4. Open Chrome and go to `chrome://extensions`.
-5. Enable **Developer mode** (toggle in the top-right corner).
-6. Click **Load unpacked** (top-left) and select the unzipped `pintube` folder.
-7. Open YouTube and enjoy your curated feed!
+1. Download **`pintube-extension.zip`** from the [PinTube GitHub Releases](https://github.com/nidsnitesh/Pintube/releases) page.
+2. Unzip the archive locally.
+3. Open Chrome and navigate to `chrome://extensions`.
+4. Enable **Developer mode** (top-right toggle).
+5. Click **Load unpacked** (top-left) and select the unzipped directory.
 
 ---
 
-## ⭐️ Stay Tuned & Contribute!
+## 🛠️ Open Source & Architectural Summary
 
-PinTube is completely open-source. If you find it helpful, please consider **starring the repository on GitHub** to follow updates!
+PinTube demonstrates that with proper architectural patterns — root stacking context isolation, RAF synchronization, debounced mutation observers, and CSS variable contracts — you can build high-performance extensions on top of complex Web Component applications without degrading frame rates or compromising user privacy.
 
-- 💻 **GitHub Repository**: [https://github.com/nidsnitesh/Pintube](https://github.com/nidsnitesh/Pintube)
-- 📦 **Latest Release**: [https://github.com/nidsnitesh/Pintube/releases](https://github.com/nidsnitesh/Pintube/releases)
+- ⭐️ **GitHub Repository**: [https://github.com/nidsnitesh/Pintube](https://github.com/nidsnitesh/Pintube)
+- 📦 **Latest Release Asset**: [https://github.com/nidsnitesh/Pintube/releases](https://github.com/nidsnitesh/Pintube/releases)
 
-Stay tuned for the official Chrome Store release announcement! If you have feature ideas or feedback, feel free to drop a comment below or open an issue on GitHub. Happy pinning! 📌
+*Stay tuned for the official Chrome Store release announcement! Feedback, architecture discussions, and Pull Requests are welcome.* 📌
