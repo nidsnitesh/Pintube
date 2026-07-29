@@ -4,6 +4,11 @@
 
 ---
 
+![PinTube Homepage Shelf Demo](https://raw.githubusercontent.com/nidsnitesh/Pintube/main/docs/images/pinned-shelf-demo.png)
+*Figure 1: PinTube homepage custom Pinned Videos shelf sitting right above the feed.*
+
+---
+
 ## 1. The Problem: The Cognitive Friction of Algorithmic Interfaces
 
 Modern consumer web platforms are engineered around a single metric: **user engagement optimization**. YouTube’s front-end architecture is a masterclass in behavioral psychology — every pixel of the homepage grid, every recommendation sidebar, and every short-form video shelf is optimized to minimize friction between sessions and maximize watch time.
@@ -42,13 +47,17 @@ PinTube is designed around three core UX principles:
 
 ## 4. Surface Architecture & Feature Overview
 
-![PinTube Architecture](https://raw.githubusercontent.com/nidsnitesh/Pintube/main/icons/icon128.png)
+![PinTube Search Results Pinning](https://raw.githubusercontent.com/nidsnitesh/Pintube/main/docs/images/search-results-pinning.png)
+*Figure 2: Pinning videos on YouTube Search Results (/results) with instant visual feedback.*
 
 ### 📌 1. Universal Thumbnail & Player Surface Pinning
 Hovering over any video card across YouTube (Home feed, `/results` search grids, or related video sidebars) exposes a high-contrast inline **Pin** action. Additionally, on watch pages (`/watch?v=...`), a native-styled **📌 Pin / Pinned** action button is injected directly into YouTube’s primary video metadata bar, right next to the channel Subscribe button.
 
 ### 🏠 2. The Homepage Pinned Shelf
 A custom, responsive CSS Grid component (`#pintube-home-shelf`) injected at the top of YouTube’s main `#contents` renderer. It mirrors YouTube’s native responsive grid tokens (`var(--ytd-rich-grid-items-per-row)`) for a seamless look and feel. Includes a collapsible state toggle for zero-visual-noise workflows.
+
+![Focus Mode Active](https://raw.githubusercontent.com/nidsnitesh/Pintube/main/docs/images/focus-mode-feed.png)
+*Figure 3: Focus Mode active — recommendation grids suppressed, only Pinned shelf and Search Bar remain.*
 
 ### 🎯 3. Focus Mode
 Toggling Focus Mode completely suppresses YouTube's primary recommendation engine (`ytd-rich-grid-row`, `ytd-rich-section-renderer`), category chip bars (`ytd-feed-filter-chip-bar-renderer`), and sidebar recommendations (`#related`). YouTube becomes a clean productivity dashboard centered on your pinned queue and search input.
@@ -58,6 +67,9 @@ Eliminates short-form video elements (`ytd-reel-shelf-renderer`, `yt-reel-shelf-
 
 ### 🎬 5. Automated Watch Page Cleanup
 Enforces Theater Mode layout (`ytd-watch-flexy[theater]`) on navigation and suppresses end-screen overlay grids (`.ytp-endscreen-content`) upon video completion.
+
+![PinTube Extension Popup Interface](https://raw.githubusercontent.com/nidsnitesh/Pintube/main/docs/images/extension-popup.png)
+*Figure 4: PinTube Extension Popup interface with Focus Mode and Hide Shorts controls.*
 
 ---
 
