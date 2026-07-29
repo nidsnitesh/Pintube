@@ -4,8 +4,7 @@
 
 ---
 
-![PinTube Homepage Shelf Demo](https://raw.githubusercontent.com/nidsnitesh/Pintube/main/docs/images/pinned-shelf-demo.png)
-*Figure 1: PinTube homepage custom Pinned Videos shelf sitting right above the feed.*
+![PinTube Hero Banner](https://raw.githubusercontent.com/nidsnitesh/Pintube/main/docs/images/hero-banner.png)
 
 ---
 
@@ -18,6 +17,9 @@ As engineers and knowledge workers, we use YouTube for high-value learning: soft
 1. **Context Switching & Attention Hijacking**: You open YouTube with a single task in mind (e.g., watching a talk on distributed consensus). Before you can focus on the search bar, 12 algorithmically selected thumbnails compete for your visual attention.
 2. **The "Watch Later" Black Hole**: When you encounter a high-value 40-minute lecture while working, saving it to YouTube’s native *Watch Later* playlist creates a high-friction storage sink. Playlists become unorganized dumping grounds with zero visual priority.
 3. **Tab Proliferation**: The default fallback for saving video context is keeping tabs open. This degrades browser performance, causes memory pressure, and fragments your workflow.
+
+![Algorithmic Feed Chaos vs PinTube Focus Mode](https://raw.githubusercontent.com/nidsnitesh/Pintube/main/docs/images/focus-concept.png)
+*Figure 1: Transforming algorithmic recommendation noise into a clean, curated productivity feed.*
 
 ---
 
@@ -47,8 +49,8 @@ PinTube is designed around three core UX principles:
 
 ## 4. Surface Architecture & Feature Overview
 
-![PinTube Search Results Pinning](https://raw.githubusercontent.com/nidsnitesh/Pintube/main/docs/images/search-results-pinning.png)
-*Figure 2: Pinning videos on YouTube Search Results (/results) with instant visual feedback.*
+![PinTube Homepage Shelf Demo](https://raw.githubusercontent.com/nidsnitesh/Pintube/main/docs/images/pinned-shelf-demo.png)
+*Figure 2: PinTube homepage custom Pinned Videos shelf sitting right above the feed.*
 
 ### 📌 1. Universal Thumbnail & Player Surface Pinning
 Hovering over any video card across YouTube (Home feed, `/results` search grids, or related video sidebars) exposes a high-contrast inline **Pin** action. Additionally, on watch pages (`/watch?v=...`), a native-styled **📌 Pin / Pinned** action button is injected directly into YouTube’s primary video metadata bar, right next to the channel Subscribe button.
@@ -56,11 +58,14 @@ Hovering over any video card across YouTube (Home feed, `/results` search grids,
 ### 🏠 2. The Homepage Pinned Shelf
 A custom, responsive CSS Grid component (`#pintube-home-shelf`) injected at the top of YouTube’s main `#contents` renderer. It mirrors YouTube’s native responsive grid tokens (`var(--ytd-rich-grid-items-per-row)`) for a seamless look and feel. Includes a collapsible state toggle for zero-visual-noise workflows.
 
-![Focus Mode Active](https://raw.githubusercontent.com/nidsnitesh/Pintube/main/docs/images/focus-mode-feed.png)
-*Figure 3: Focus Mode active — recommendation grids suppressed, only Pinned shelf and Search Bar remain.*
+![PinTube Search Results Pinning](https://raw.githubusercontent.com/nidsnitesh/Pintube/main/docs/images/search-results-pinning.png)
+*Figure 3: Pinning videos on YouTube Search Results (/results) with instant visual feedback.*
 
 ### 🎯 3. Focus Mode
 Toggling Focus Mode completely suppresses YouTube's primary recommendation engine (`ytd-rich-grid-row`, `ytd-rich-section-renderer`), category chip bars (`ytd-feed-filter-chip-bar-renderer`), and sidebar recommendations (`#related`). YouTube becomes a clean productivity dashboard centered on your pinned queue and search input.
+
+![Focus Mode Active](https://raw.githubusercontent.com/nidsnitesh/Pintube/main/docs/images/focus-mode-feed.png)
+*Figure 4: Focus Mode active — recommendation grids suppressed, only Pinned shelf and Search Bar remain.*
 
 ### 🚫 4. Real-Time Shorts Elimination
 Eliminates short-form video elements (`ytd-reel-shelf-renderer`, `yt-reel-shelf-view-model`, `ytd-reel-item-renderer`) across all viewports, including dynamic navigation drawers (`#guide` and `#mini-guide`).
@@ -69,7 +74,7 @@ Eliminates short-form video elements (`ytd-reel-shelf-renderer`, `yt-reel-shelf-
 Enforces Theater Mode layout (`ytd-watch-flexy[theater]`) on navigation and suppresses end-screen overlay grids (`.ytp-endscreen-content`) upon video completion.
 
 ![PinTube Extension Popup Interface](https://raw.githubusercontent.com/nidsnitesh/Pintube/main/docs/images/extension-popup.png)
-*Figure 4: PinTube Extension Popup interface with Focus Mode and Hide Shorts controls.*
+*Figure 5: PinTube Extension Popup interface with Focus Mode and Hide Shorts controls.*
 
 ---
 
